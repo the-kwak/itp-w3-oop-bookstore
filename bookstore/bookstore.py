@@ -3,8 +3,7 @@ class Bookstore(object):
         self.name = bookstore_name
         self.book_inventory = []
         
-        # This needs to be initialized for search_books
-        self.results =[]
+        self.results = []
         
     def add_book(self, book):
         # Take in book variable and append to our book inventory
@@ -14,45 +13,44 @@ class Bookstore(object):
     def get_books(self):
         return self.book_inventory
     
-    # Made None the default variable because it is falsey and we can use it below.
-    def search_books(self, author = None):
-        # I restarted this list becasue we want a new list everytime this is called
-        self.results = []
+    
+    # author was set to none because none is falsey and we could use it in the
+    # if author is a string it will be truthy
+    def search_books(self, author = None, title = None):
+        self.results =[]
         
-        # When author is None the statement is false if it has a value it is truth
-        if author:
-            # We search through our list of objects in book_inventory which are 
-            # instances of the Book() Class and because of this we can check the author
-            # by doing book.author and compare it to the author given
+        if title:
+            #here?
             for book in self.book_inventory:
-                if book.author == author:
-                    # we append it to the results list for the  bookstore object
+                # let's try with print statements
+                if book.title.startswith(title.title()):
+                    self.results.append(book)
+        
+        elif author:
+            for book in self.book_inventory:
+                if book.author is author:
                     self.results.append(book)
         
         return self.results
-    
+        
     
 class Author(object):
-    # Use the magic method to initialize the instance of the object
     def __init__ (self, name, nationality):
-        # adding the variables given when Author() is called
         self.name = name
         self.nationality = nationality
-        # adding in a variable we need but was not given
+        # initialize a list of books for the author
         self.list_of_books = []
         
     def get_books(self):
-        # Return the list of books the author is related to
+        # Return the list of books for the author
         return self.list_of_books
         
         
 
 class Book(object):
-    # initializing book when Book() is called
     def __init__(self, title, author):
-        # Adding variables given when Book() is called
         self.title = title
         self.author = author
-        # Adding self (book just created) to the instance of the authors list
-        # of books. ** From this object we are modifiying another object**
+        # Takes the author object and adds the current book to the list in the
+        # Author object
         author.list_of_books.append(self)
